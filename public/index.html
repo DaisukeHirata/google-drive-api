@@ -13,7 +13,9 @@
 <body>
     <script type="text/javascript">
         const CLIENT_ID = '886362590553-9jquva3abdu343dcuuujbm7volmcpqk8.apps.googleusercontent.com';
-        const SCOPES = 'https://www.googleapis.com/auth/drive';
+        const SCOPES = [
+            'https://www.googleapis.com/auth/cloud-platform',
+        ];
         const RESPONSE_TYPE = 'id_token permission';
 
         /**
@@ -26,7 +28,7 @@
         /**
          * Check if the current user has authorized the application.
          */
-        function checkAuth() {
+        const checkAuth = () => {
             gapi.auth2.authorize({
                 'client_id': CLIENT_ID,
                 'scope': SCOPES,
@@ -54,14 +56,7 @@
             } else {
                 // No access token could be retrieved, show the button to start the authorization flow.
                 authButton.style.display = 'block';
-                authButton.onclick = function () {
-                    gapi.auth.authorize({
-                        'client_id': CLIENT_ID,
-                        'scope': SCOPES,
-                        'immediate': false
-                    },
-                        handleAuthResult);
-                };
+                authButton.onclick = checkAuth;
             }
         }
 
@@ -71,14 +66,20 @@
          * @param {Object} evt Arguments from the file selector.
          */
         function writeFile(evt) {
-            gapi.client.load('drive', 'v2', function () {
+            gapi.client.load('drive', 'v2', () => {
                 //var file = evt.target.files[0];
-                var fileName = document.getElementById("fileName").value;
-                var content = document.getElementById("content").value;
+                const fileName = document.getElementById("fileName").value;
+                const content = document.getElementById("content").value;
                 console.log("fileName = " + fileName);
                 console.log("content = " + content);
                 insertFile(fileName, content);
-            });
+            });s
+
+            // gapi.client.load('cloudkms', 'v1', () => {
+            //     // now we can use gapi.client.cloudkms
+            //     // ... 
+            //     console.log('cloudkms');
+            // });
         }
 
         /**
