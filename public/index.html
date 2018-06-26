@@ -12,8 +12,9 @@
 
 <body>
     <script type="text/javascript">
-        var CLIENT_ID = '886362590553-9jquva3abdu343dcuuujbm7volmcpqk8.apps.googleusercontent.com';
-        var SCOPES = 'https://www.googleapis.com/auth/drive';
+        const CLIENT_ID = '886362590553-9jquva3abdu343dcuuujbm7volmcpqk8.apps.googleusercontent.com';
+        const SCOPES = 'https://www.googleapis.com/auth/drive';
+        const RESPONSE_TYPE = 'id_token permission';
 
         /**
          * Called when the client library is loaded to start the auth flow.
@@ -29,7 +30,7 @@
             gapi.auth2.authorize({
                 'client_id': CLIENT_ID,
                 'scope': SCOPES,
-                'immediate': true
+                'response_type': RESPONSE_TYPE
             },
                 handleAuthResult);
         }
